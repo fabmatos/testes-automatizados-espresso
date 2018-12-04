@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 
 android {
-  compileSdkVersion 24
-  buildToolsVersion "24.0.0"
+  compileSdkVersion 27
+  buildToolsVersion "28.0.2"
 
   defaultConfig {
     applicationId "com.example.heitorcolangelo.espressotests"
     minSdkVersion 16
-    targetSdkVersion 24
+    targetSdkVersion 27
     versionCode 1
     versionName "1.0"
 
@@ -16,6 +16,12 @@ android {
     vectorDrawables.useSupportLibrary = true
 
     resConfigs "en"
+  }
+//Correcao da incompatibilidade de versoes do support-annotations
+  configurations.all {
+    resolutionStrategy {
+      force 'com.android.support:support-annotations:23.1.1'
+    }
   }
 
   def baseUrl = '"http://api.randomuser.me/"'
@@ -32,11 +38,14 @@ android {
 final butterKnifeVersion = '8.1.0'
 final picassoVersion = '2.5.2'
 final okHttpVersion = '3.3.1'
-final androidSupportVersion = '24.1.1'
+final androidSupportVersion = '23.3.0'
 final retrofitVersion = '2.0.2'
 final espressoVersion = '2.2.2'
 
 dependencies {
+//  //Correcao do support-annotations segundo o tutorial
+//  androidTestCompile 'com.android.support:support-annotations:$androidSupportVersion'
+
   compile fileTree(dir: 'libs', include: ['*.jar'])
 
   compile "com.android.support:appcompat-v7:$androidSupportVersion"
@@ -63,8 +72,8 @@ dependencies {
   // Espresso
   androidTestCompile "com.android.support.test.espresso:espresso-core:$espressoVersion"
   androidTestCompile "com.android.support.test:runner:0.5"
-
-  androidTestCompile "com.android.support:support-annotations:$androidSupportVersion"
+  //Espresso intents
+  androidTestCompile "com.android.support.test.espresso:espresso-intents:$espressoVersion"
 
   testCompile 'junit:junit:4.12'
 }
