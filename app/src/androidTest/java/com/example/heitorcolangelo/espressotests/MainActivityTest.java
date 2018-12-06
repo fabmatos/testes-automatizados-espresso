@@ -1,8 +1,11 @@
 package com.example.heitorcolangelo.espressotests;
 
+import android.app.Activity;
+import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.JsonReader;
@@ -12,9 +15,11 @@ import com.example.heitorcolangelo.espressotests.network.Api;
 import com.example.heitorcolangelo.espressotests.network.UsersApi;
 import com.example.heitorcolangelo.espressotests.ui.activity.LoginActivity;
 import com.example.heitorcolangelo.espressotests.ui.activity.MainActivity;
+import com.example.heitorcolangelo.espressotests.ui.activity.UserDetailsActivity;
 
 import net.vidageek.mirror.dsl.Mirror;
 
+import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -44,9 +49,11 @@ import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard
 import static android.support.test.espresso.action.ViewActions.pressBack;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.Intents.intending;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtraWithKey;
 import static android.support.test.espresso.matcher.ViewMatchers.hasSibling;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -94,6 +101,29 @@ public class MainActivityTest {
         mActivutyRule.launchActivity(new Intent());
         onView(allOf(withId(R.id.user_view_image),hasSibling(withText("Rasha Bosse")))).check(matches(isDisplayed()));
         onView(allOf(withId(R.id.user_view_name), withText("Rasha Bosse"))).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void whenClickOnItemList_shouldStartUserDetailsActivity_withExtra(){
+
+        String users=readJSONFromAsset();
+        server.enqueue(new MockResponse().setResponseCode(200).setBody(users));
+        mActivutyRule.launchActivity(new Intent());
+        Intents.init();
+        Matcher<Intent> matcher = allOf(
+                hasComponent(UserDetailsActivity.class.getName()),
+                hasExtraWithKey(UserDetailsActivity.CLICKED_USER)
+        );
+
+        Instrumentation.ActivityResult
+                result = new Instrumentation.ActivityResult(Activity.RESULT_OK, null);
+
+        intending(matcher).respondWith(result);
+
+        onView(withId(R.id.recycler_view)).perform(actionOnItemAtPosition(0, click()));
+
+        intended(matcher);
+        Intents.release();
     }
 
     @After

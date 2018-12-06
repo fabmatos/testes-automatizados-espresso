@@ -79,6 +79,14 @@ dependencies {
   androidTestCompile "com.android.support.test:runner:0.5"
   //Espresso intents
   androidTestCompile "com.android.support.test.espresso:espresso-intents:$espressoVersion"
+  //Recycler view actions
+  androidTestCompile("com.android.support.test.espresso:espresso-contrib:$espressoVersion") {
+    exclude module: 'appcompat-v7'
+    exclude module: 'support-v4'
+    exclude module: 'support-annotations'
+    exclude module: 'recyclerview-v7'
+    exclude module: 'design'
+  }
 
   testCompile 'junit:junit:4.12'
 }
