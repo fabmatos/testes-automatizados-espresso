@@ -47,9 +47,11 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.Intents.intending;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static android.support.test.espresso.matcher.ViewMatchers.hasSibling;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.not;
 
 @RunWith(AndroidJUnit4.class)
@@ -74,6 +76,24 @@ public class MainActivityTest {
         server.enqueue(new MockResponse().setResponseCode(200).setBody(users));
         mActivutyRule.launchActivity(new Intent());
         onView(withId(R.id.recycler_view)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void whenResultIsNotOK_shouldDisplayError() {
+
+        server.enqueue(new MockResponse().setResponseCode(500).setBody(Mocks.ERROR));
+        mActivutyRule.launchActivity(new Intent());
+        onView(withId(R.id.error_view)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void checkUserItemView_isDisplayed(){
+
+        String users=readJSONFromAsset();
+        server.enqueue(new MockResponse().setResponseCode(200).setBody(users));
+        mActivutyRule.launchActivity(new Intent());
+        onView(allOf(withId(R.id.user_view_image),hasSibling(withText("Rasha Bosse")))).check(matches(isDisplayed()));
+        onView(allOf(withId(R.id.user_view_name), withText("Rasha Bosse"))).check(matches(isDisplayed()));
     }
 
     @After

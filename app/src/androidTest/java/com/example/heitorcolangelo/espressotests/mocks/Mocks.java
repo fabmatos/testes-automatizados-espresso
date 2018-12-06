@@ -1,12 +1,12 @@
 package com.example.heitorcolangelo.espressotests.mocks;
 
-public class Mocks {
+public interface Mocks {
 
-    String ERROR = "{\n"
+    static String ERROR = "{\n"
             + "  error: \"Uh oh, something has gone wrong. Please tweet us @randomapi about the issue. Thank you.\"\n"
             + "}";
 
-    String SUCCESS = "{\n" +
+    static String SUCCESS = "{\n" +
             "  \"results\": [\n" +
             "    {\n" +
             "      \"gender\": \"male\",\n" +
