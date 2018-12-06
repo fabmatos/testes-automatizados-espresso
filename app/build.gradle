@@ -65,6 +65,11 @@ dependencies {
   compile "com.squareup.okhttp3:okhttp:$okHttpVersion"
   compile "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
 
+  //Mirror para reflection
+  androidTestCompile "net.vidageek:mirror:1.6.1"
+
+  androidTestCompile "com.squareup.okhttp3:mockwebserver:$okHttpVersion"
+
   // Retrofit
   compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
   compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
