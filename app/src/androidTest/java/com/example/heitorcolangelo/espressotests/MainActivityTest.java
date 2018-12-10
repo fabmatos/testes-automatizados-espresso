@@ -158,7 +158,7 @@ public class MainActivityTest {
                 .withValue(value);
     }
 
-    public String readJSONFromAsset() {
+    private String readJSONFromAsset() {
 
         String json = null;
         try {
