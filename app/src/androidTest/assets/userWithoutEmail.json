@@ -1,0 +1,53 @@
+
+{
+  "gender": "female",
+  "name": {
+    "title": "ms",
+    "first": "rasha",
+    "last": "bosse"
+  },
+  "location": {
+    "street": "6200 lucasbolwerk",
+    "city": "nissewaard",
+    "state": "flevoland",
+    "postcode": 64523,
+    "coordinates": {
+      "latitude": "44.7689",
+      "longitude": "150.7808"
+    },
+    "timezone": {
+      "offset": "+2:00",
+      "description": "Kaliningrad, South Africa"
+    }
+  },
+  "email": "",
+  "login": {
+    "uuid": "c1f89992-9274-4db1-8d25-7fe939031702",
+    "username": "greenkoala994",
+    "password": "bryan",
+    "salt": "jEt3Shp1",
+    "md5": "d231c653ff60a5cd292f5a4320f317ae",
+    "sha1": "a636744c032124a40b0a6aa2b80e37f66a1fdb52",
+    "sha256": "b39ab9450e1a6f74f51eda0c3cfb2223ba09cfb12b15b34af3a30c9f49c0610d"
+  },
+  "dob": {
+    "date": "1991-02-02T09:16:05Z",
+    "age": 27
+  },
+  "registered": {
+    "date": "2011-10-27T14:42:24Z",
+    "age": 7
+  },
+  "phone": "(602)-140-1188",
+  "cell": "(172)-026-1875",
+  "id": {
+    "name": "BSN",
+    "value": "74843640"
+  },
+  "picture": {
+    "large": "https://randomuser.me/api/portraits/women/18.jpg",
+    "medium": "https://randomuser.me/api/portraits/med/women/18.jpg",
+    "thumbnail": "https://randomuser.me/api/portraits/thumb/women/18.jpg"
+  },
+  "nat": "NL"
+}

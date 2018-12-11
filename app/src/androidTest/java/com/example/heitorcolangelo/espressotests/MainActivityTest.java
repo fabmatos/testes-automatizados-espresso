@@ -99,8 +99,8 @@ public class MainActivityTest {
         String users=readJSONFromAsset();
         server.enqueue(new MockResponse().setResponseCode(200).setBody(users));
         mActivutyRule.launchActivity(new Intent());
-        onView(allOf(withId(R.id.user_view_image),hasSibling(withText("Rasha Bosse")))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.user_view_name), withText("Rasha Bosse"))).check(matches(isDisplayed()));
+        onView(allOf(withId(R.id.user_view_image),hasSibling(withText("Silvester Hölzl")))).check(matches(isDisplayed()));
+        onView(allOf(withId(R.id.user_view_name), withText("Silvester Hölzl"))).check(matches(isDisplayed()));
     }
 
     @Test
