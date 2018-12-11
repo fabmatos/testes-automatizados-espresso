@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.v4.content.ContextCompat;
 
 import com.example.heitorcolangelo.espressotests.entities.User;
 import com.example.heitorcolangelo.espressotests.entities.UserResults;
@@ -53,6 +54,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.hasSibling;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static matcher.TextColorMatcher.withTextColor;
 import static org.hamcrest.Matchers.allOf;
 
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -110,6 +112,10 @@ public class UserDetailsActivityTest {
                 withId(R.id.image_and_text_image),
                 hasSibling(withText("No info available"))))
                 .check(matches(isDisplayed()));
+        onView(allOf(
+                withText("No info available"),
+                withTextColor(ContextCompat.getColor(mActivutyRule.getActivity(), R.color.red)))
+        ).check(matches(isDisplayed()));
     }
 
     private Intent createIntent(String users) {
