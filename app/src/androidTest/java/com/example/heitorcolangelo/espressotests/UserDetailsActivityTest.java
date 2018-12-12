@@ -1,5 +1,6 @@
 package com.example.heitorcolangelo.espressotests;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import com.example.heitorcolangelo.espressotests.network.Api;
 import com.example.heitorcolangelo.espressotests.network.UsersApi;
 import com.example.heitorcolangelo.espressotests.network.model.UserVO;
 import com.example.heitorcolangelo.espressotests.ui.activity.UserDetailsActivity;
+import com.example.heitorcolangelo.espressotests.utils.PermissionUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -45,9 +47,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static android.support.test.InstrumentationRegistry.getContext;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.Intents.intending;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtraWithKey;
 import static android.support.test.espresso.matcher.ViewMatchers.hasSibling;
@@ -102,6 +106,7 @@ public class UserDetailsActivityTest {
 
     @Test
     public void whenEmailIsMissing_shouldDisplay_NoInfoMessage(){
+
         String users=readJsonToStringFromAsset("userWithoutEmail.json");
 
         server.enqueue(new MockResponse().setResponseCode(200).setBody(users));
@@ -116,6 +121,22 @@ public class UserDetailsActivityTest {
                 withText("No info available"),
                 withTextColor(ContextCompat.getColor(mActivutyRule.getActivity(), R.color.red)))
         ).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void clickOnPhone_shouldStartPhoneIntent(){
+
+        String user=readJsonToStringFromAsset("userFull.json");
+
+        mActivutyRule.launchActivity(createIntent(user));
+        Intents.init();
+        intending(hasAction(Intent.ACTION_CALL))
+                .respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, new Intent()));
+        onView(withId(R.id.user_details_phone)).perform(scrollTo(), click());
+        PermissionUtils.allowPermissionsIfNeeded(Manifest.permission.CALL_PHONE);
+        intended(hasAction(Intent.ACTION_CALL));
+
+        Intents.release();
     }
 
     private Intent createIntent(String users) {
